@@ -1,10 +1,10 @@
-#  💻 Programación 1
+# 💻 Programación 1
 # 📍 Universidad Tecnológica Nacional
 #
 # ✨ Estudiante
 #
 # Nombre: Nicolas Federico Alejandro, Estrella
-# Comisión: M2025-1
+# Comisión: M2026-1
 #
 # 📂 Descripción del Repositorio
 #
