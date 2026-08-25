@@ -3,7 +3,7 @@
 #Actividad N1
 
 edad_usuario = int(input("Ingrese su edad! : "))
-if edad_usuario > 18:
+if edad_usuario >= 18:
     print("usted es mayor de edad!\n") 
 #Actividad N2
 
@@ -55,6 +55,8 @@ elif media < mediana and mediana < moda:
     print("El Sesgo es Negativo! \n")
 elif media == mediana and mediana == moda:
     print("No hay sesgo")
+else:
+    print("No se puede determinar el sesgo")
 
 #Actividad N7
 
