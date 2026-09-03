@@ -6,14 +6,20 @@ print(f"la suma de la lista es: {sum(lista)}")
 #Actividad N2
 
 lista = [int(x) for x in input("Ingrese una lista de numeros separados por coma sin espacios ! : \n").split(",")]
-maximo = max(lista)
-minimo = min(lista)
+maximo = 0
+minimo = 0
+for i in range(len(lista)):
+    if lista[i] > maximo:
+        maximo = lista[i]
+    elif lista[i] < minimo:
+        minimo = lista[i]
 print(f"El mayor numero de la lista : {lista} \nEs :  {maximo} \nY el minimo \nEs : {minimo}")
 
 #Actividad N3
 
 lista = [str(palabra) for palabra in input("Ingrese una lista de elementos separados por coma sin espacios ! : \n").split(",")]
-lista.reverse()
+for elemento in range(len(lista)):
+    lista[elemento] = lista[elemento][::-1]
 print(f"la lista revertida es: {lista}")
 
 #Actividad N4
@@ -39,7 +45,11 @@ print(f"La nueva lista es: {lista}\n")
 #Actividad N6
 
 lista = [int(numero) for numero in input("Ingrese una lista de numeros separados por coma sin espacios ! : \n").split(",")]
-print(f"la lista sin elementos repetidos es: {set(lista)}\n")
+sin_repetidos = []
+for numero in lista:
+    if numero not in sin_repetidos:
+        sin_repetidos.append(numero)
+print(f"la lista sin repetidos es: {sin_repetidos}\n")
 
 #Actividad N7
 
@@ -49,9 +59,16 @@ print(f"el promedio de la lista es: {sum(lista) / len(lista)}\n")
 #Actividad N8
 
 lista = [str(elemento) for elemento in input("Ingrese una lista de elementos separados por coma sin espacios ! : \n").split(",")]
-elementos_unicos = list(set(lista))
-lista_repetidos = [elemento for elemento in elementos_unicos if lista.count(elemento) > 1]
 
+elementos_unicos = []
+lista_repetidos = []
+for elemento in lista:
+    if elemento not in elementos_unicos:
+        elementos_unicos.append(elemento)
+    elif elemento in elementos_unicos and elemento not in lista_repetidos:
+        lista_repetidos.append(elemento)
+    else:
+        pass
 print(f"\nlos elementos unicos de la lista : {lista} \nSon: {elementos_unicos}\n")
 print(f"los elementos repetidos de la lista Son: {lista_repetidos}\n")
 

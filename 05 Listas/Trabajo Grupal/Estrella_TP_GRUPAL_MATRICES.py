@@ -51,7 +51,13 @@ matriz = [
     [8, 12, 3],
     [4, 2, 41]
 ]
-max_matriz = max(num for fila in matriz for num in fila)
+matriz = [num for fila in matriz for num in fila]
+Max_num = 0
+for fila in matriz:
+    for elemento in fila:
+        if elemento > Max_num:
+            Max_num = elemento
+max_matriz = Max_num
 print(f"el numero con maximo valor de la matriz es: {max_matriz} \n")
 
 
