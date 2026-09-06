@@ -1,0 +1,126 @@
+# Actividad 1
+def calcular_factura_final(monto_base: float, impuesto: float = 21.0, descuento: float = 0.0, envio_prioritario: float | None = None) -> float:
+    sub_total = monto_base * (1 - descuento / 100)
+    total = sub_total * (1 + impuesto / 100)
+    if envio_prioritario is not None:
+        total += envio_prioritario
+    return float(f"{total:.2f}") 
+print(calcular_factura_final(1000.0))
+
+print(calcular_factura_final(1000.0, descuento=10.0))
+
+print(calcular_factura_final(1000.0, impuesto=10.0, descuento=5.0, envio_prioritario=150.0))
+print ("\n")
+# Actividad 2
+
+class ValidadorFinanciero:
+    @staticmethod
+    def es_cuit_valido(cuit: str) -> bool:
+        return len(cuit) == 11 and cuit.isdigit()
+
+    @staticmethod
+    def convertir_moneda(monto: float, tasa_de_cambio: float, comision: float = 0.02) -> float:
+        return monto * tasa_de_cambio * (1 - comision)
+    
+print(ValidadorFinanciero.es_cuit_valido("20384920194")) #→ True
+print(ValidadorFinanciero.es_cuit_valido("20-38492019-4")) #→ False
+print(ValidadorFinanciero.convertir_moneda(100.0, 1000.0, comision=0.05)) # → 95000.0
+print ("\n")
+# Actividad 3
+class Notificador:
+    def enviar_recibo(self, cliente : str, total: float) -> None :
+        print(f"Se ha enviado el recibo a {cliente} con un total de ${total}")
+class ProcesadorDePago:
+    def __init__(self, notificador : Notificador) -> None:
+        self.notificador = notificador
+    def procesar_transaccion(self, cliente : str, items : dict, descuento_cupon : float = 0.0) -> float:
+        sub_total = sum(item["precio"] for item in items)
+        total = sub_total * (1 - descuento_cupon / 100)
+        self.notificador.enviar_recibo(cliente, total)
+        return total
+    
+notificador = Notificador()
+procesador = ProcesadorDePago(notificador)
+carrito = [{"nombre": "Teclado", "precio": 50.0}, {"nombre": "Mouse", "precio": 30.0}]
+procesador.procesar_transaccion("Ana Gómez", carrito, descuento_cupon=10.0)
+print ("\n")
+# Actividad 4
+
+def generar_auditoria_sistema(modulo: str, *mensajes: str, **metadatos) -> str:
+    modulo = modulo.upper()
+
+    for i in range(len(mensajes)):
+        print(f"Mensaje {i + 1}: {mensajes[i]}")
+
+    for clave in metadatos:
+        valor = metadatos[clave]
+        print(f"{clave}: {valor}")
+    return f"Auditoria generada para el modulo {modulo}"
+
+log = generar_auditoria_sistema(
+    "AUTH", 
+    "Intento fallido",
+    "Bloqueo de IP", 
+    usuario="admin", 
+    ip="192.168.1.10"
+    )
+print(log) 
+print ("\n")
+# Actividad 5
+
+class CalculadoraFitness ():
+
+    @staticmethod
+    def calcular_imc(peso: float, altura: float) -> float: #(Fórmula: peso / (altura^2))
+        return peso / (altura * altura)
+    @staticmethod
+    def clasificar_imc(imc: float) -> str:
+        if imc < 18.5:
+            return "Bajo peso"
+        elif imc >= 25:
+            return "Sobrepeso"
+        else:
+            return "Peso normal"
+
+class Atleta:
+    def __init__(self, nombre: str, peso: float, altura: float):
+        self.nombre = nombre
+        self.peso = peso
+        self.altura = altura
+
+    def obtener_reporte(self, incluir_recomendacion: bool = False, **metricas_extra) -> str:
+        CalculadoraFitness.calcular_imc(self.peso, self.altura)
+        imc = CalculadoraFitness.calcular_imc(self.peso, self.altura)
+        lineas = [
+            f"Nombre: {self.nombre}",
+            f"Peso: {self.peso} kg",
+            f"Altura: {self.altura} m",
+            f"IMC: {imc}",
+        ]
+
+        if metricas_extra:
+            lineas.append("\nMétricas Adicionales:")
+            for clave in metricas_extra:
+                valor = metricas_extra[clave]
+                nombre_metrica = clave.capitalize()
+                lineas.append(f"{nombre_metrica}: {valor}")
+
+        if incluir_recomendacion:
+            lineas.append (f"Recomendacion: ")
+            if imc < 18.5:
+                lineas.append("Se aconseja aumentar el consumo calórico e hipertrofia.")
+            elif imc >= 25:
+                lineas.append("Se recomienda deficit calórico moderado y trabajo aeróbico.")
+            else:
+                lineas.append("Mantener el plan de entrenamiento y nutrición actual.")
+        return lineas
+
+
+atleta = Atleta("Juan", 70.0, 1.75)
+reporte = atleta.obtener_reporte(incluir_recomendacion=True)
+for linea in reporte:
+    print(linea)
+atleta = Atleta("Pedro", 80.0, 1.80)
+reporte = atleta.obtener_reporte(incluir_recomendacion=True, edad = 25)
+for linea in reporte:
+    print(linea)
