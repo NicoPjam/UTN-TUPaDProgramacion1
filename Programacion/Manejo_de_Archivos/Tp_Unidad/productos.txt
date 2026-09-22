@@ -1,0 +1,5 @@
+tenedor,1500,10
+cuchara,1800,6
+cuchillo,2100,8
+Cucharon,1000,51
+cucharon,1500,3

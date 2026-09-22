@@ -1,0 +1,5 @@
+Juan;Pérez;53365;8
+María;López;55654;10
+Pablo;Gómez;58999;6
+Luis;Peralta;55654;9
+Fernando;Hernández;58549;7
