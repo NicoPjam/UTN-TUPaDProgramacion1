@@ -14,6 +14,9 @@ class Menu:
             print("╚══════════════════════════════╝")
 
             opcion = input(f"Seleccione una opcion: ").strip()
+            if opcion == "":
+                print(f"No se ingreso ninguna opcion.")
+                continue
             if opcion.isdigit() == False and opcion.isalpha() == True and opcion.isnumeric() == False:
                 print(f"La opcion ingresada no es valida. Por favor ingrese una opcion valida.")
                 continue

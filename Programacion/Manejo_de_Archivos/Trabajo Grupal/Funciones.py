@@ -2,16 +2,20 @@ import os
 
 alumnos = {}
 aprobados = {}
-
+directorio_relativo = r"Programacion\Manejo_de_Archivos\Trabajo Grupal\Informes_Generados"
+ruta_alumnos = os.path.join(directorio_relativo, "alumnos.txt")
+ruta_aprobado = os.path.join(directorio_relativo, "aprobados.txt")
 class Funciones:
 
     @staticmethod
     def leer_alumnos():
-        if not os.path.exists("alumnos.txt"):
-            with open(r"alumnos.txt", "w") as archivo:
+        if not os.path.exists(directorio_relativo):
+            os.makedirs(directorio_relativo, exist_ok=True)
+        if not os.path.exists(ruta_alumnos):
+            with open(ruta_alumnos, "w") as archivo:
                 pass
         else:
-            with open(r"alumnos.txt", "r") as archivo:
+            with open(ruta_alumnos, "r") as archivo:
                 for linea in archivo:
                     alumno = linea.strip().split(";")
                     alumnos[alumno[0]] = [alumno[1], alumno[2], alumno[3]]
@@ -23,18 +27,30 @@ class Funciones:
         print("Legajo || Nombre || Apellido || Nota")
         for alumno in alumnos:
             print(f"{alumno} || {alumnos[alumno][0]} || {alumnos[alumno][1]} || {alumnos[alumno][2]}")
-
+        print("══════════════════════════════")
     @staticmethod
-    def validar_alumno(nombre, apellido, legajo, nota):
-        if not legajo.isnumeric() and len(legajo) != 5:
-            print("El legajo debe ser un número de 5 dígitos")
-            return False
-        if not nombre.isalpha():
+    def validar_Nombre_alumno(nombre=""):
+        if not nombre.replace(" ", "").isalpha():
             print("El nombre debe contener solo letras")
             return False
-        if not apellido.isalpha():
+        return True
+
+    @staticmethod
+    def validar_Apellido_alumno(apellido=""):
+        if not apellido.replace(" ", "").isalpha():
             print("El apellido debe contener solo letras")
             return False
+        return True
+
+    @staticmethod
+    def validar_legajo_alumno(legajo=""):
+        if not legajo.isnumeric() or len(legajo) != 5:
+            print("El legajo debe ser un número de 5 dígitos")
+            return False
+        return True
+
+    @staticmethod
+    def validar_nota_alumno(nota=""):
         if not nota.isnumeric():
             print("La nota debe ser un número")
             return False
@@ -57,21 +73,27 @@ class Funciones:
         else:
             with open(r"alumnos.txt", "a") as archivo:
                 pass
-        legajo = input("Ingrese el legajo del alumno: ").strip()
-        nombre = input("Ingrese el nombre del alumno: ").strip().title()
-        apellido = input("Ingrese el apellido del alumno: ").strip().title()
-        nota = input("Ingrese la nota del alumno: ").strip()
-        if Funciones.validar_alumno(nombre, apellido, legajo, nota) == True:
-            if Funciones.existe_alumno(legajo) == True:
-                print("El alumno ya existe")
-                return
-            alumnos[legajo] = [nombre, apellido, nota]
-            with open(r"alumnos.txt", "a") as archivo:
-                archivo.write(f"{legajo};{nombre};{apellido};{nota}\n")
-            print(f"El alumno {nombre} {apellido} ha sido agregado correctamente")
-        else:
-            print("El alumno no pudo ser agregado porque no cumple con los requisitos")
-    
+        while True:
+            legajo = input("Ingrese el legajo del alumno: ")
+            if Funciones.validar_legajo_alumno(legajo):
+                break
+        while True:
+            nombre = input("Ingrese el nombre del alumno: ")
+            if Funciones.validar_Nombre_alumno(nombre):
+                break
+        while True:
+            apellido = input("Ingrese el apellido del alumno: ")
+            if Funciones.validar_Apellido_alumno(apellido):
+                break
+        while True:
+            nota = input("Ingrese la nota del alumno: ")
+            if Funciones.validar_nota_alumno(nota):
+                break
+        
+        alumnos[legajo] = [nombre, apellido, nota]
+        with open(ruta_alumnos, "a") as archivo:
+            archivo.write(f"{legajo};{nombre};{apellido};{nota}\n")
+        print(f"El alumno {nombre} {apellido} ha sido agregado correctamente")
 
     @staticmethod
     def guardar_aprobados():
@@ -90,3 +112,8 @@ class Funciones:
         print("Legajo || Nombre || Apellido || Nota")
         for alumno in aprobados:
             print(f"{alumno} || {aprobados[alumno][0]} || {aprobados[alumno][1]} || {aprobados[alumno][2]}")
+        print("══════════════════════════════")
+        with open(ruta_aprobado, "w") as archivo:
+            for alumno in aprobados:
+                archivo.write(f"{alumno};{aprobados[alumno][0]};{aprobados[alumno][1]};{aprobados[alumno][2]}\n")
+

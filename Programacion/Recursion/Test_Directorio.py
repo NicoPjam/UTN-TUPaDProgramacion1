@@ -18,6 +18,8 @@ proyectos.subdirectorios.append(temp)
 root.subdirectorios.append(imagenes)
 root.subdirectorios.append(proyectos)
 
+root.archivos.append(Archivo("EXCEL.XLS", 10000))
+
 tamano_total = calcular_tamano_total(root)
 print(f"1. calcular_tamano_total(root) -> {tamano_total} bytes")
 
